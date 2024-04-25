@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,17 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'angular-stock-aoc';
+  isExpanded = true
+  isLoggedIn = false
+
+  @ViewChild('sidenav', { static: true }) sidenav: any
+
+  constructor() {
+    // Check if the user is logged in
+    this.isLoggedIn = localStorage.getItem('token') ? true : false
+  }
+
+  toggleSideBar() {
+    this.sidenav.toggle();
+  }
 }
