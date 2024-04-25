@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
-import { UserService } from '../../services/user.service'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'app-header',
@@ -8,6 +8,13 @@ import { UserService } from '../../services/user.service'
 })
 export class HeaderComponent implements OnInit {
 
+  // สร้างตัวแปรไว้เก็บข้อมูลผู้ใช้งานที่ Login
+  userProfile: any = {
+    "username": "",
+    "email": "",
+    "role": ""
+  }
+
   @Output() sidenavToggle = new EventEmitter<void>();
   @Input() isOpened?: boolean
 
@@ -15,8 +22,13 @@ export class HeaderComponent implements OnInit {
   version = '1.0.0'
 
   constructor(
-    private http: UserService
-  ) { }
+    private auth: AuthService
+  ) {
+    // ดึงข้อมูลผู้ใช้งานที่ Login มาแสดง
+    this.userProfile.username = this.auth.getUser().username
+    this.userProfile.email = this.auth.getUser().email
+    this.userProfile.role = this.auth.getUser().role
+  }
 
   ngOnInit(): void {
   }
@@ -26,9 +38,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickSignout() {
-    this.http.Logout().subscribe(() => {
-      window.location.href = '/login'
-    })
+    this.auth.logout()
+    window.location.href = '/login'
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core'
+import { AuthService } from './services/auth.service'
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,11 @@ export class AppComponent {
 
   @ViewChild('sidenav', { static: true }) sidenav: any
 
-  constructor() {
+  constructor(
+    private auth: AuthService
+  ) {
     // Check if the user is logged in
-    this.isLoggedIn = localStorage.getItem('token') ? true : false
+    this.isLoggedIn = this.auth.isLoggedIn() ? true : false
   }
 
   toggleSideBar() {
