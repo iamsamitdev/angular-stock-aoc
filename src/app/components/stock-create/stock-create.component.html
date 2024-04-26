@@ -56,14 +56,25 @@
                             required>
                     </mat-form-field>
 
-                    <!-- <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
+                    <!-- Preview Image -->
+                    <div class="d-flex justify-content-center">
+                        <img 
+                            *ngIf="imageFile" 
+                            [src]="imageURL" 
+                            alt="preview" 
+                            class="w-[300px] object-cover"
+                        />
+                    </div>
+
+                    <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
                     <input 
                         class="ng-hide" 
-                        id="productPicture"
-                        name="productPicture"
-                        formControlName="productPicture"
+                        id="image"
+                        name="image"
+                        formControlName="image"
                         type="file" 
-                    /> -->
+                        (change)="onChangeImage($event)"
+                    />
 
                     <button mat-raised-button color="primary">บันทึก</button>
                 </div>

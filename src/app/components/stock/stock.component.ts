@@ -59,10 +59,16 @@ export class StockComponent implements OnInit {
   }
 
   onClickDelete(row: any) {
-    // do remote
-    // this.dataSource.data = await lastValueFrom(
-    //   this.rest.deleteProduct(this.selectedProduct)
-    // );
+    // console.log(row)
+    this.http.deleteProduct(row).subscribe({
+      next: (result) => {
+        console.log(result)
+        this.dataSource.data = this.dataSource.data.filter((product: any) => product.productID !== row)
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    })
   }
 
   clearSearch() {

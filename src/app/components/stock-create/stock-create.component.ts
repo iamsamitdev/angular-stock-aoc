@@ -10,6 +10,20 @@ import { ProductService } from '../../services/product.service'
 export class StockCreateComponent implements OnInit{
   
   formProduct!: FormGroup;
+  imageURL = null
+  imageFile = null
+
+  // ฟังก์ชันสำหรับเลือกรูปภาพ
+  onChangeImage(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        this.imageURL = e.target.result
+      }
+      reader.readAsDataURL(event.target.files[0])
+      this.imageFile = event.target.files[0]
+    }
+  }
 
   initForm() {
 
@@ -27,8 +41,8 @@ export class StockCreateComponent implements OnInit{
       productName: new FormControl('', Validators.required),
       unitPrice: new FormControl('', Validators.required),
       unitInStock: new FormControl('', Validators.required),
+      image: new FormControl(''),
       categoryID: new FormControl('', Validators.required),
-      // productPicture: new FormControl(''),
       createdDate: new FormControl(dateNow, Validators.required),
       modifiedDate: new FormControl(dateNow, Validators.required),
     });
@@ -53,6 +67,11 @@ export class StockCreateComponent implements OnInit{
       // วนลูปดูค่าที่อยู่ใน formProduct
       for (let key in this.formProduct.value) {
         formData.append(key, this.formProduct.value[key])
+      }
+
+      // ถ้ามีการเลือกรูปภาพ
+      if (this.imageFile) {
+        formData.append('image', this.imageFile)
       }
 
       // วนลูปดูค่าที่อยู่ใน formData
