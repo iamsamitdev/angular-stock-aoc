@@ -21,11 +21,18 @@ export class ProductService {
   // Read token from Local Storage
   token = localStorage.getItem('LoggedInToken')
 
-  // Header
+  // Header for GET, DELETE
   httpOptions  = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization': 'Bearer '+ this.token ?? ''
+    })
+  }
+
+  // Header for POST, PUT
+  httpOptionsPost  = {
+    headers: new HttpHeaders({
       'Authorization': 'Bearer '+ this.token ?? ''
     })
   }
@@ -54,7 +61,7 @@ export class ProductService {
     return this.http.post<any>(
       this.apiURL + 'Product', 
       product, 
-      this.httpOptions
+      this.httpOptionsPost
     )
   }
 
@@ -63,7 +70,7 @@ export class ProductService {
     return this.http.put<any>(
       this.apiURL + 'Product/' + product.productID, 
       product, 
-      this.httpOptions
+      this.httpOptionsPost
     )
   }
 
