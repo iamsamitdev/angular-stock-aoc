@@ -38,12 +38,4 @@ export class UserService {
       this.httpOptions
     )
   }
-
-  // Method for Logout
-  Logout() {
-    // Remove token from local storage
-    localStorage.removeItem('token')
-    return this.http.post(this.apiURL + 'Authenticate/logout', this.httpOptions)
-  }
-
 }

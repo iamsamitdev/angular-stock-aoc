@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserService } from '../../services/user.service'
 import { MatDialog } from '@angular/material/dialog'
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -20,15 +21,24 @@ export class LoginComponent implements OnInit {
     password: '',
   }
 
+  // สร้างตัวแปรเก็บข้อมูลการ Login
+  userLogin = {
+    "username": "",
+    "email": "",
+    "role": "",
+    "token": ""
+  }
+
   // สำหรับซ่อนแสดง password
   hide = true
 
   constructor(
+    private auth: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
     private http: UserService,
     private dialog: MatDialog
-  ) {}
+) {}
 
   ngOnInit() {
     // กำหนดค่าให้กับ Form
@@ -58,6 +68,7 @@ export class LoginComponent implements OnInit {
         
         next: (data: any) => {
           if (data.token != null) {
+
             this.dialog.open(AlertDialogComponent, {
               data: {
                 title: 'Login Success',
@@ -67,9 +78,24 @@ export class LoginComponent implements OnInit {
               },
             })
 
-            // สำหรับเก็บ Token ลง Local Storage
-            localStorage.setItem('token', data.token)
-            window.location.href = '/stock'
+            this.userLogin = {
+              "username": data.userData.userName,
+              "email": data.userData.email,
+              "role": data.userData.roles[0],
+              "token": data.token
+            }
+
+            // console.log(this.userLogin)
+
+            // บันทึกข้อมูลลง local storage
+            this.auth.setUser(this.userLogin)
+
+            // delay 2 วินาที
+            setTimeout(() => {
+              // Redirect ไปหน้า backend
+              window.location.href = '/stock'
+            }, 2000);
+
           }
         },
 

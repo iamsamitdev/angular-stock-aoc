@@ -14,13 +14,18 @@
         ANGULAR {{ pageName }}
       </div>
       <div style="flex: 1"></div>
+
+      <div class="flex flex-col my-2 text-end">
+        <span class="text-sm line-clamp-1">{{ userProfile.username }}</span>
+        <span class="text-sm line-clamp-1">{{ userProfile.email }}</span>
+      </div>
   
       <!-- logout button -->
       <span>
         <button
           [matMenuTriggerFor]="menu"
           aria-label="Example icon-button with a menu"
-          class="ml-auto border-none bg-transparent cursor-pointer"
+          class="ml-auto bg-transparent border-none cursor-pointer"
         >
           <img
             height="40"

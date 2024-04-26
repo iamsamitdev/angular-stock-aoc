@@ -13,7 +13,7 @@ export class AppComponent {
 
   constructor() {
     // Check if the user is logged in
-    this.isLoggedIn = localStorage.getItem('token') ? true : false
+    this.isLoggedIn = localStorage.getItem('LoggedInToken') ? true : false
   }
 
   toggleSideBar() {

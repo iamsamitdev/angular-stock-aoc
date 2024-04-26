@@ -20,6 +20,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { StockComponent } from './components/stock/stock.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
+import { StockCreateComponent } from './components/stock-create/stock-create.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.com
     LoginComponent,
     RegisterComponent,
     StockComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    StockCreateComponent
   ],
   imports: [
     BrowserModule,
